@@ -1,0 +1,176 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harness-manager
+  namespace: {{ .Release.Namespace }}
+  labels:
+        {{- include "harness-manager.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "harness-manager.selectorLabels" . | nindent 6 }} 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{.Values.maxSurge}}
+      maxUnavailable: {{.Values.maxUnavailable}}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "harness-manager.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}  
+      serviceAccountName: {{ include "harness-manager.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: check-for-mongo
+          image: {{ .Values.initContainers.checkForMongo.image.repository }}:{{ .Values.initContainers.checkForMongo.image.tag }}
+          command:
+            - "sh"
+          args:
+            - "-c"
+            - |
+              if [ -s /mongo/ca.pem ]; then
+                ssl_args="--tls --tlsCAFile /mongo/ca.pem --tlsCertificateKeyFile /mongo/client.pem";
+              fi
+              until mongo "$MONGO_URI" $ssl_args --eval "db.adminCommand('ping')"; do echo waiting for mongodb; sleep 2; done
+          {{- if .Values.global.mongoSSL }} 
+          volumeMounts:
+            - name: mongo-ssl-certs
+              mountPath: /mongo
+          {{- end }}
+          env:
+            - name: MONGODB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: harness-secret
+                  key: mongodbUsername
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: harness-secret
+                  key: mongodbPassword
+            - name: MONGO_URI
+              value: 'mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@mongodb-replicaset-chart-0.mongodb-replicaset-chart.{{ .Release.Namespace }}.svc:27017/harness?authSource=admin'
+          securityContext:
+            {{- toYaml .Values.initContainers.checkForMongo.securityContext | nindent 12 }}
+        - name: check-for-timescaledb
+          image: {{ .Values.initContainers.checkForTimescaledb.image.repository}}:{{ .Values.initContainers.checkForTimescaledb.image.tag}}
+          command: ['sh', '-c', "until pg_isready -h timescaledb-single-chart; do echo waiting for timescaledb; sleep 2; done"]
+          env:
+            - name : TIMESCALEDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: harness-secret
+                  key: timescaledbPostgressPassword
+            - name: TIMESCALEDB_USERNAME
+              value: postgres
+            - name: TIMESCALEDB_URI
+              value: 'jdbc:postgresql://timescaledb-single-chart.{{ .Release.Namespace }}:5432/harness'
+          securityContext:
+            {{- toYaml .Values.initContainers.checkForTimescaledb.securityContext | nindent 12 }}
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: harness-manager-config
+          env:
+            - name: MONGODB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: harness-secret
+                  key: mongodbUsername
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: harness-secret
+                  key: mongodbPassword
+            - name : TIMESCALEDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: harness-secret
+                  key: timescaledbPostgressPassword
+            - name: TIMESCALEDB_USERNAME
+              value: postgres
+            - name: MONGO_URI
+              value: 'mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@mongodb-replicaset-chart-0.mongodb-replicaset-chart.{{ .Release.Namespace }}.svc:27017/harness?authSource=admin'
+            - name: TIMESCALEDB_URI
+              value: 'jdbc:postgresql://timescaledb-single-chart.{{ .Release.Namespace }}:5432/harness'
+          image: {{ include "harnesscommon.names.imagename" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - touch
+                  - shutdown
+          livenessProbe:
+            failureThreshold: 20
+            initialDelaySeconds: 180
+            httpGet:
+              path: /api/version
+              port: {{.Values.service.port}}
+              scheme: HTTP
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: manager
+          ports:
+            - containerPort: {{.Values.service.grpcport}}
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /api/health
+              port: {{.Values.service.port}}
+              scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          {{- if .Values.global.mongoSSL }}
+          volumeMounts:
+            - name: mongo-ssl-certs
+              mountPath: /mongo
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.global.mongoSSL }}
+      volumes:
+        - name: mongo-ssl-certs
+          secret:
+            secretName: mongodb-replicaset-ssl-cert
+      {{- end }}    
+      affinity:   
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - harness-manager
+            topologyKey: "kubernetes.io/hostname"
+      {{- with .Values.affinity }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
