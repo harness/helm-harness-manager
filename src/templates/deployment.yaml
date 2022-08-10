@@ -62,7 +62,7 @@ spec:
                   name: harness-secrets
                   key: mongodbPassword
             - name: MONGO_URI
-              value: 'mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@mongodb-replicaset-chart-0.mongodb-replicaset-chart.{{ .Release.Namespace }}.svc:27017/harness?authSource=admin'
+              value: {{ include "harnesscommon.database.mongo" (dict "database" "harness" "context" $) }}
           securityContext:
             {{- toYaml .Values.initContainers.checkForMongo.securityContext | nindent 12 }}
         - name: check-for-timescaledb
@@ -103,7 +103,7 @@ spec:
             - name: TIMESCALEDB_USERNAME
               value: postgres
             - name: MONGO_URI
-              value: 'mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@mongodb-replicaset-chart-0.mongodb-replicaset-chart.{{ .Release.Namespace }}.svc:27017/harness?authSource=admin'
+              value: {{ include "harnesscommon.database.mongo" (dict "database" "harness" "context" $) }}
             - name: TIMESCALEDB_URI
               value: 'jdbc:postgresql://timescaledb-single-chart.{{ .Release.Namespace }}:5432/harness'
           image: {{ include "harnesscommon.names.imagename" . }}
