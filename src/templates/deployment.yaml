@@ -5,13 +5,16 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
         {{- include "harness-manager.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-1"
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "harness-manager.selectorLabels" . | nindent 6 }} 
+      {{- include "harness-manager.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -29,7 +32,7 @@ spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
-      {{- end }}  
+      {{- end }}
       serviceAccountName: {{ include "harness-manager.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -105,8 +108,8 @@ spec:
         - name: mongo-ssl-certs
           secret:
             secretName: mongodb-replicaset-ssl-cert
-      {{- end }}    
-      affinity:   
+      {{- end }}
+      affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:

@@ -32,7 +32,7 @@ data:
   REDIS_SENTINELS: 'redis://redis-sentinel-harness-announce-0.{{ .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-1.{{ .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-2.{{ .Release.Namespace }}:26379'
   SERVER_PORT: "9090"
   SERVICE_ACC: /opt/harness/svc/service_acc.json
-  VERSION: {{ .Values.version }}  
+  VERSION: {{ .Values.version }}
   LOG_STREAMING_SERVICE_TOKEN: c76e567a-b341-404d-a8dd-d9738714eb82
   NG_MANAGER_BASE_URL: '{{  .Values.global.loadbalancerURL }}/ng/api/'
   ACCESS_CONTROL_ENABLED: "true"
@@ -45,7 +45,7 @@ data:
   {{- if .Values.global.mongoSSL }}
   MONGO_SSL_CONFIG: "true"
   MONGO_SSL_CA_TRUST_STORE_PATH: /opt/harness/keystore.jks
-  MONGO_SSL_CA_TRUST_STORE_PASSWORD: password 
+  MONGO_SSL_CA_TRUST_STORE_PASSWORD: password
   {{- end }}
   VERIFICATION_SERVICE_SECRET: 59MR5RlVARcdH7zb7pNx6GzqiglBmXR8
 
@@ -53,3 +53,6 @@ kind: ConfigMap
 metadata:
   name: harness-manager-config
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-1"
