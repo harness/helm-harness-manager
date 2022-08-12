@@ -1,11 +1,11 @@
 apiVersion: v1
 data:
-  ALLOWED_ORIGINS: '{{  .Values.global.loadbalancerURL }}'
-  API_URL: '{{  .Values.global.loadbalancerURL }}'
-  DELEGATE_METADATA_URL: '{{  .Values.global.loadbalancerURL }}/storage/wingsdelegates/delegateprod.txt'
-  UI_SERVER_URL: '{{  .Values.global.loadbalancerURL }}'
-  WATCHER_METADATA_URL: '{{  .Values.global.loadbalancerURL }}/storage/wingswatchers/watcherprod.txt'
-  LOG_STREAMING_SERVICE_BASEURL: '{{  .Values.global.loadbalancerURL }}/gateway/log-service/'
+  ALLOWED_ORIGINS: '{{ .Values.global.loadbalancerURL }}'
+  API_URL: '{{ .Values.global.loadbalancerURL }}'
+  DELEGATE_METADATA_URL: '{{ .Values.global.loadbalancerURL }}/storage/wingsdelegates/delegateprod.txt'
+  UI_SERVER_URL: '{{ .Values.global.loadbalancerURL }}'
+  WATCHER_METADATA_URL: '{{ .Values.global.loadbalancerURL }}/storage/wingswatchers/watcherprod.txt'
+  LOG_STREAMING_SERVICE_BASEURL: '{{ .Values.global.loadbalancerURL }}/gateway/log-service/'
   ATMOSPHERE_BACKEND: REDIS
   BACKGROUND_SCHEDULER_CLUSTERED: "true"
   CACHE_BACKEND: REDIS
@@ -13,17 +13,12 @@ data:
   DELEGATE_DOCKER_IMAGE: {{ .Values.delegate_docker_image | quote }}
   DELEGATE_SERVICE_TARGET: localhost:9879
   DELEGATE_SERVICE_AUTHORITY: default-authority.harness.io
-  DELEGATE_GRPC_TARGET: '{{  .Values.global.host_name }}:9879'
-  DELEGATE_GRPC_AUTHORITY: default-authority.harness.io
   DISTRIBUTED_LOCK_IMPLEMENTATION: REDIS
   DEPLOY_MODE: KUBERNETES_ONPREM
   DISABLE_NEW_RELIC: "true"
   ENABLE_G1GC: "true"
   EXTERNAL_GRAPHQL_RATE_LIMIT: '{{ .Values.external_graphql_rate_limit }}'
   FEATURES: '{{ .Values.features }}'
-  HAZELCAST_NAMESPACE: '{{ .Release.Namespace }}'
-  HAZELCAST_SERVICE: harness-manager
-  HZ_CLUSTER_NAME: harness-manager
   LOGGING_LEVEL: '{{ .Values.appLogLevel }}'
   MEMORY: {{ .Values.java.memory | quote }}
   REDIS_SENTINEL: "true"
@@ -34,10 +29,10 @@ data:
   SERVICE_ACC: /opt/harness/svc/service_acc.json
   VERSION: {{ .Values.version }}
   LOG_STREAMING_SERVICE_TOKEN: c76e567a-b341-404d-a8dd-d9738714eb82
-  NG_MANAGER_BASE_URL: '{{  .Values.global.loadbalancerURL }}/ng/api/'
+  NG_MANAGER_BASE_URL: 'http://ng-manager.{{ .Release.Namespace }}.svc.cluster.local:7090/api/'
   ACCESS_CONTROL_ENABLED: "true"
-  ACCESS_CONTROL_BASE_URL: '{{  .Values.global.loadbalancerURL }}/authz/api/'
-  EVENTS_FRAMEWORK_REDIS_SENTINELS: 'redis://redis-sentinel-harness-announce-0.{{  .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-1.{{ .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-2.{{ .Release.Namespace }}:26379'
+  ACCESS_CONTROL_BASE_URL: 'http://accesscontrol-service.{{ .Release.Namespace }}.svc.cluster.local:9006/api/'
+  EVENTS_FRAMEWORK_REDIS_SENTINELS: 'redis://redis-sentinel-harness-announce-0.{{ .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-1.{{ .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-2.{{ .Release.Namespace }}:26379'
   EVENTS_FRAMEWORK_SENTINEL_MASTER_NAME: 'harness-redis'
   EVENTS_FRAMEWORK_USE_SENTINEL: "true"
   EVENTS_FRAMEWORK_AVAILABLE_IN_ONPREM: "true"
