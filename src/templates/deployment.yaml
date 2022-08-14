@@ -37,7 +37,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
-      - name: serviceWait
+      - name: wait
         image: busybox:1.35.0
         imagePullPolicy: IfNotPresent
         command: ['sh', '-c', "sleep 180"]
