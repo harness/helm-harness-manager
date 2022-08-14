@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 global:
-  loadbalancerURL: "http://test/abc"
+  loadbalancerURL: ""
   mongoSSL: false
 replicaCount: 1
 maxSurge: 1
@@ -26,22 +26,6 @@ java:
   memory: "2048"
 
 external_graphql_rate_limit: "500"
-
-initContainers:
-  checkForMongo:
-    image:
-      tag: "4.2.19"
-      repository: harness/mongo
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 999
-  checkForTimescaledb:
-    image:
-      tag: pg13-ts2.6-oss-latest
-      repository: timescale/timescaledb-ha
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 1000
 
 nameOverride: ""
 fullnameOverride: ""
