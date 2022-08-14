@@ -12,7 +12,7 @@ image:
   repository: harness/manager-signed
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "76019"
+  tag: ""
 
 version: 1.0.76019
 
