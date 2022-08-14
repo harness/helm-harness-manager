@@ -36,6 +36,11 @@ spec:
       serviceAccountName: {{ include "harness-manager.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+      - name: serviceWait
+        image: busybox:1.35.0
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', "sleep 180"]
       containers:
         - envFrom:
             - configMapRef:
