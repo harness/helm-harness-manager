@@ -16,7 +16,10 @@ image:
 
 version: 1.0.76019
 
-delegate_docker_image: harness/delegate:latest
+delegate_docker_image:
+  image: 
+    repository: harness/delegate
+    tag: latest
 
 features:
 

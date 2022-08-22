@@ -10,7 +10,7 @@ data:
   BACKGROUND_SCHEDULER_CLUSTERED: "true"
   CACHE_BACKEND: REDIS
   CAPSULE_JAR: rest-capsule.jar
-  DELEGATE_DOCKER_IMAGE: {{ .Values.delegate_docker_image | quote }}
+  DELEGATE_DOCKER_IMAGE: {{ include "harness-manager.delegate_docker_image" . }}
   DELEGATE_SERVICE_TARGET: localhost:9879
   DELEGATE_SERVICE_AUTHORITY: default-authority.harness.io
   DELEGATE_GRPC_TARGET: '{{  .Values.global.host_name }}:9879'
