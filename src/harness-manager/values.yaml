@@ -20,14 +20,14 @@ initContainer:
   image:
     registry: docker.io
     repository: busybox
-    pullPolicy: IfNotPresent 
+    pullPolicy: IfNotPresent
     tag: latest
-    digest: ""    
+    digest: ""
 
 version: 1.0.76019
 
 delegate_docker_image:
-  image: 
+  image:
     registry: docker.io
     repository: harness/delegate
     tag: latest
@@ -88,4 +88,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-

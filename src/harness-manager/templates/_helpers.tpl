@@ -67,4 +67,3 @@ Create the name of the delegate image to use
 {{- define "harness-manager.delegate_docker_image" -}}
 {{ include "common.images.image" (dict "imageRoot" .Values.delegate_docker_image.image "global" .Values.global) }}
 {{- end }}
-
