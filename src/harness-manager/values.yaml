@@ -9,17 +9,29 @@ maxSurge: 1
 maxUnavailable: 0
 
 image:
+  registry: docker.io
   repository: harness/manager-signed
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "76019"
+  digest: ""
+
+initContainer:
+  image:
+    registry: docker.io
+    repository: busybox
+    pullPolicy: IfNotPresent 
+    tag: latest
+    digest: ""    
 
 version: 1.0.76019
 
 delegate_docker_image:
   image: 
+    registry: docker.io
     repository: harness/delegate
     tag: latest
+    digest: ""
 
 features:
 

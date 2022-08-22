@@ -38,7 +38,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
       - name: wait
-        image: busybox:1.35.0
+        image: {{ include "common.images.image" (dict "imageRoot" .Values.initContainer.image "global" .Values.global) }}
         imagePullPolicy: IfNotPresent
         command: ['sh', '-c', "sleep 180"]
       containers:
@@ -67,7 +67,7 @@ spec:
               value: {{ include "harnesscommon.database.mongo" (dict "database" "harness" "context" $) }}
             - name: TIMESCALEDB_URI
               value: 'jdbc:postgresql://timescaledb-single-chart.{{ .Release.Namespace }}:5432/harness'
-          image: {{ include "harnesscommon.names.imagename" . }}
+          image: {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

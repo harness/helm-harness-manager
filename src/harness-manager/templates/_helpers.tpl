@@ -65,10 +65,6 @@ Create the name of the service account to use
 Create the name of the delegate image to use
 */}}
 {{- define "harness-manager.delegate_docker_image" -}}
-{{- if .Values.global.imageRegistry -}}
-{{- printf "%s/%s:%s" .Values.global.imageRegistry ((splitList "/" .Values.delegate_docker_image.image.repository) | last) .Values.delegate_docker_image.image.tag -}}
-{{- else -}}
-{{- printf "%s:%s" .Values.delegate_docker_image.image.repository .Values.delegate_docker_image.image.tag -}}
-{{- end -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.delegate_docker_image.image "global" .Values.global) }}
 {{- end }}
 
