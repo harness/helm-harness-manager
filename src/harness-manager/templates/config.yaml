@@ -10,6 +10,7 @@ data:
   BACKGROUND_SCHEDULER_CLUSTERED: "true"
   CACHE_BACKEND: REDIS
   CAPSULE_JAR: rest-capsule.jar
+  DELEGATE_DOCKER_IMAGE: {{ include "harness-manager.delegate_docker_image" . }}
   DELEGATE_SERVICE_TARGET: harness-manager:9879
   DELEGATE_SERVICE_AUTHORITY: harness-manager:9879
   DISTRIBUTED_LOCK_IMPLEMENTATION: REDIS
