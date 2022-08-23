@@ -18,7 +18,7 @@ image:
 
 waitForInitContainer:
   image:
-    registry: ghcr.io 
+    registry: ghcr.io
     repository: groundnuty/k8s-wait-for
     pullPolicy: IfNotPresent
     tag: "v1.6"

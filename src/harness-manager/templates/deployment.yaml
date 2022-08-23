@@ -40,15 +40,15 @@ spec:
       - name: wait-for-mongo
         image: {{ include "common.images.image" (dict "imageRoot" .Values.waitForInitContainer.image "global" .Values.global) }}
         imagePullPolicy: IfNotPresent
-        args: 
+        args:
           - "pod"
           - "-lapp=mongodb-replicaset"
       - name: wait-for-timescale
         image: {{ include "common.images.image" (dict "imageRoot" .Values.waitForInitContainer.image "global" .Values.global) }}
         imagePullPolicy: IfNotPresent
-        args: 
+        args:
           - "pod"
-          - "-lapp=timescaledb-single-chart"     
+          - "-lapp=timescaledb-single-chart"
       containers:
         - envFrom:
             - configMapRef:
