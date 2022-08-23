@@ -5,9 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
         {{- include "harness-manager.labels" . | nindent 4 }}
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-1"
+  annotations: {}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -27,6 +25,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        app: harness-manager
         {{- include "harness-manager.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -57,18 +56,18 @@ spec:
             - name: MONGODB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: harness-secrets
-                  key: mongodbUsername
+                  name: {{ .Values.mongoSecrets.userName.name }}
+                  key: {{ .Values.mongoSecrets.userName.key }}
             - name: MONGODB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: harness-secrets
-                  key: mongodbPassword
+                  name: {{ .Values.mongoSecrets.password.name }}
+                  key: {{ .Values.mongoSecrets.password.key }}
             - name : TIMESCALEDB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: harness-secrets
-                  key: timescaledbPostgresPassword
+                  name: {{ .Values.timescaleSecret.password.name }}
+                  key: {{ .Values.timescaleSecret.password.key }}
             - name: TIMESCALEDB_USERNAME
               value: postgres
             - name: MONGO_URI
