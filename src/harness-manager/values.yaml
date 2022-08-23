@@ -16,6 +16,14 @@ image:
   tag: "76019"
   digest: ""
 
+waitForInitContainer:
+  image:
+    registry: ghcr.io 
+    repository: groundnuty/k8s-wait-for
+    pullPolicy: IfNotPresent
+    tag: "v1.6"
+    digest: ""
+
 initContainer:
   image:
     registry: docker.io
