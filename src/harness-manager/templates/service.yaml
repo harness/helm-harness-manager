@@ -5,9 +5,7 @@ metadata:
     {{- include "harness-manager.labels" . | nindent 4 }}
   name: harness-manager
   namespace: {{ .Release.Namespace }}
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-1"
+  annotations: {}
 spec:
   ports:
     - name: http-manager
