@@ -51,6 +51,4 @@ kind: ConfigMap
 metadata:
   name: harness-manager-config
   namespace: {{ .Release.Namespace }}
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-1"
+  annotations: {}
