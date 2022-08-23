@@ -11,10 +11,8 @@ data:
   CACHE_BACKEND: REDIS
   CAPSULE_JAR: rest-capsule.jar
   DELEGATE_DOCKER_IMAGE: {{ include "harness-manager.delegate_docker_image" . }}
-  DELEGATE_SERVICE_TARGET: localhost:9879
-  DELEGATE_SERVICE_AUTHORITY: default-authority.harness.io
-  DELEGATE_GRPC_TARGET: '{{  .Values.global.host_name }}:9879'
-  DELEGATE_GRPC_AUTHORITY: default-authority.harness.io
+  DELEGATE_SERVICE_TARGET: harness-manager:9879
+  DELEGATE_SERVICE_AUTHORITY: harness-manager:9879
   DISTRIBUTED_LOCK_IMPLEMENTATION: REDIS
   DEPLOY_MODE: KUBERNETES_ONPREM
   DISABLE_NEW_RELIC: "true"
