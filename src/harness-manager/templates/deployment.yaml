@@ -48,6 +48,12 @@ spec:
         args:
           - "pod"
           - "-lapp=timescaledb-single-chart"
+      - name: wait-for-redis
+        image: {{ include "common.images.image" (dict "imageRoot" .Values.waitForInitContainer.image "global" .Values.global) }}
+        imagePullPolicy: IfNotPresent
+        args:
+          - "pod"
+          - "-lapp=app.kubernetes.io/name:redis"
       containers:
         - envFrom:
             - configMapRef:
