@@ -53,7 +53,7 @@ spec:
         imagePullPolicy: IfNotPresent
         args:
           - "pod"
-          - "-lapp=app.kubernetes.io/name:redis"
+          - "-lapp=redis-sentinel"
       containers:
         - envFrom:
             - configMapRef:
