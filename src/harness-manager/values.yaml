@@ -18,10 +18,10 @@ image:
 
 waitForInitContainer:
   image:
-    registry: ghcr.io
-    repository: groundnuty/k8s-wait-for
+    registry: docker.io
+    repository: harness/helm-init-container
     pullPolicy: IfNotPresent
-    tag: "v1.6"
+    tag: "latest"
     digest: ""
 
 initContainer:
