@@ -91,8 +91,7 @@ spec:
                   - touch
                   - shutdown
           livenessProbe:
-            failureThreshold: 20
-            initialDelaySeconds: 180
+            failureThreshold: 5
             httpGet:
               path: /api/version
               port: {{.Values.service.port}}
@@ -100,20 +99,28 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             timeoutSeconds: 1
-          name: manager
-          ports:
-            - containerPort: {{.Values.service.grpcport}}
-              protocol: TCP
           readinessProbe:
-            failureThreshold: 6
+            failureThreshold: 5
             httpGet:
               path: /api/health
               port: {{.Values.service.port}}
               scheme: HTTP
-            initialDelaySeconds: 90
-            periodSeconds: 5
+            periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 25
+            httpGet:
+              path: /api/health
+              port: {{.Values.service.port}}
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: manager
+          ports:
+            - containerPort: {{.Values.service.grpcport}}
+              protocol: TCP
           {{- if .Values.global.mongoSSL }}
           volumeMounts:
             - name: mongo-ssl-certs
