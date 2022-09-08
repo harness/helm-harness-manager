@@ -89,7 +89,7 @@ probes:
     failureThreshold: 5
     httpGet:
       path: /api/version
-      port: {{.Values.service.port}}
+      port: 9090
       scheme: HTTP
     periodSeconds: 20
     successThreshold: 1
@@ -98,7 +98,7 @@ probes:
     failureThreshold: 5
     httpGet:
       path: /api/health
-      port: {{.Values.service.port}}
+      port: 9090
       scheme: HTTP
     periodSeconds: 10
     successThreshold: 1
@@ -107,7 +107,7 @@ probes:
     failureThreshold: 25
     httpGet:
       path: /api/health
-      port: {{.Values.service.port}}
+      port: 9090
       scheme: HTTP
     periodSeconds: 10
     successThreshold: 1
