@@ -84,6 +84,35 @@ securityContext:
   runAsUser: 65534
   runAsNonRoot: true
 
+probes:
+  livenessProbe:
+    failureThreshold: 5
+    httpGet:
+      path: /api/version
+      port: {{.Values.service.port}}
+      scheme: HTTP
+    periodSeconds: 20
+    successThreshold: 1
+    timeoutSeconds: 1
+  readinessProbe:
+    failureThreshold: 5
+    httpGet:
+      path: /api/health
+      port: {{.Values.service.port}}
+      scheme: HTTP
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  startupProbe:
+    failureThreshold: 25
+    httpGet:
+      path: /api/health
+      port: {{.Values.service.port}}
+      scheme: HTTP
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+
 service:
   type: ClusterIP
   port: 9090
