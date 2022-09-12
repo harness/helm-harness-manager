@@ -40,6 +40,7 @@ data:
   EVENTS_FRAMEWORK_USE_SENTINEL: "true"
   EVENTS_FRAMEWORK_AVAILABLE_IN_ONPREM: "true"
   EVENTS_FRAMEWORK_REDIS_URL: 'redis://localhost:6379'
+  HARNESS_ENABLE_NG_AUTH_UI_PLACEHOLDER: "true"
   {{- if .Values.global.mongoSSL }}
   MONGO_SSL_CONFIG: "true"
   MONGO_SSL_CA_TRUST_STORE_PATH: /opt/harness/keystore.jks
