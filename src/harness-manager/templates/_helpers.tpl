@@ -67,3 +67,15 @@ Create the name of the delegate image to use
 {{- define "harness-manager.delegate_docker_image" -}}
 {{ include "common.images.image" (dict "imageRoot" .Values.delegate_docker_image.image "global" .Values.global) }}
 {{- end }}
+
+## Generate ffString based of feature flag values and globally enabled features
+{{- define "harness-manager.ffString" -}}
+{{- $flags := .Values.featureFlags.Base }}
+{{- if .Values.global.sto.enabled }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.STO }}
+{{- end }}
+{{- if .Values.global.et.enabled }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.ET }}
+{{- end }}
+{{- printf "%s" $flags }}
+{{- end }}
