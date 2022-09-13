@@ -3,6 +3,20 @@ entries:
   harness-manager:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2022-09-13T19:22:47.90307828Z"
+    dependencies:
+    - name: harness-common
+      repository: https://harness.github.io/helm-common
+      version: 1.x.x
+    description: A Helm chart for Kubernetes
+    digest: 7bdd9dbdf3d1578579900408f4623e292ccace8f1b01dc07ab0fad2760565d92
+    name: harness-manager
+    type: application
+    urls:
+    - https://github.com/harness/helm-harness-manager/releases/download/harness-manager-0.2.14/harness-manager-0.2.14.tgz
+    version: 0.2.14
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2022-09-12T15:40:32.901731453Z"
     dependencies:
     - name: harness-common
@@ -213,4 +227,4 @@ entries:
     urls:
     - https://github.com/harness/helm-harness-manager/releases/download/harness-manager-0.2.0/harness-manager-0.2.0.tgz
     version: 0.2.0
-generated: "2022-09-12T15:40:32.901893954Z"
+generated: "2022-09-13T19:22:47.90314678Z"
