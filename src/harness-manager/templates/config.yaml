@@ -18,7 +18,7 @@ data:
   DISABLE_NEW_RELIC: "true"
   ENABLE_G1GC: "true"
   EXTERNAL_GRAPHQL_RATE_LIMIT: '{{ .Values.external_graphql_rate_limit }}'
-  FEATURES: '{{ .Values.features }}'
+  FEATURES: {{ include "harness-manager.ffString" . | quote }}
   HAZELCAST_NAMESPACE: '{{ .Release.Namespace }}'
   HAZELCAST_SERVICE: harness-manager
   HZ_CLUSTER_NAME: harness-manager
