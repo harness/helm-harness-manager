@@ -4,6 +4,10 @@
 global:
   loadbalancerURL: ""
   mongoSSL: false
+
+  ingress:
+    useSelfSignedCert: false
+
   sto:
     enabled: false
   et:

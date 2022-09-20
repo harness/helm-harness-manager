@@ -5,7 +5,11 @@ data:
   DELEGATE_METADATA_URL: '{{  .Values.global.loadbalancerURL }}/storage/wingsdelegates/delegateprod.txt'
   UI_SERVER_URL: '{{  .Values.global.loadbalancerURL }}'
   WATCHER_METADATA_URL: '{{  .Values.global.loadbalancerURL }}/storage/wingswatchers/watcherprod.txt'
+  {{- if .Values.global.ingress.useSelfSignedCert }}
+  LOG_STREAMING_SERVICE_BASEURL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
+  {{- else }}
   LOG_STREAMING_SERVICE_BASEURL: '{{  .Values.global.loadbalancerURL }}/gateway/log-service/'
+  {{- end }}
   ATMOSPHERE_BACKEND: REDIS
   BACKGROUND_SCHEDULER_CLUSTERED: "true"
   CACHE_BACKEND: REDIS
