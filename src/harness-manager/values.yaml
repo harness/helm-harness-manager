@@ -12,6 +12,8 @@ global:
     enabled: false
   et:
     enabled: false
+  ngcustomdashboard:
+    enabled: false
 
 replicaCount: 1
 maxSurge: 1
@@ -126,3 +128,5 @@ featureFlags:
   STO: "SECURITY,SECURITY_STAGE,STO_CI_PIPELINE_SECURITY,STO_API_V2"
   # -- ET Flags
   ET: "CVNG_ENABLED,ERROR_TRACKING_ENABLED"
+  # -- Custom Dashboard Flags
+  CDB: "NG_DASHBOARDS"
