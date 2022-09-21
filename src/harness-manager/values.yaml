@@ -14,7 +14,6 @@ global:
     enabled: false
   ngcustomdashboard:
     enabled: false
-  
 
 replicaCount: 1
 maxSurge: 1
