@@ -14,6 +14,8 @@ global:
     enabled: false
   ngcustomdashboard:
     enabled: false
+  ff:
+    enabled: false
 
 replicaCount: 1
 maxSurge: 1
@@ -130,3 +132,5 @@ featureFlags:
   ET: "CVNG_ENABLED,ERROR_TRACKING_ENABLED"
   # -- Custom Dashboard Flags
   CDB: "NG_DASHBOARDS"
+
+  FF: "CFNG_ENABLED"
