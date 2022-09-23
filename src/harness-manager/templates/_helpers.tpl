@@ -80,5 +80,8 @@ Create the name of the delegate image to use
 {{- if .Values.global.ngcustomdashboard.enabled }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.CDB }}
 {{- end }}
+{{- if .Values.global.ff.enabled }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.FF }}
+{{- end }}
 {{- printf "%s" $flags }}
 {{- end }}
