@@ -74,8 +74,8 @@ Create the name of the delegate image to use
 {{- if .Values.global.sto.enabled }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.STO }}
 {{- end }}
-{{- if .Values.global.et.enabled }}
-{{- $flags = printf "%s,%s" $flags .Values.featureFlags.ET }}
+{{- if .Values.global.srm.enabled }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.SRM }}
 {{- end }}
 {{- if .Values.global.ngcustomdashboard.enabled }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.CDB }}
