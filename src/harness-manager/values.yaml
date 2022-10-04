@@ -16,6 +16,8 @@ global:
     enabled: false
   ff:
     enabled: false
+  saml:
+    autoaccept: false
 
 replicaCount: 1
 maxSurge: 1
@@ -132,5 +134,7 @@ featureFlags:
   SRM: "CVNG_ENABLED,ERROR_TRACKING_ENABLED"
   # -- Custom Dashboard Flags
   CDB: "NG_DASHBOARDS"
+
+  SAMLAutoAccept: "AUTO_ACCEPT_SAML_ACCOUNT_INVITES"
 
   FF: "CFNG_ENABLED"
