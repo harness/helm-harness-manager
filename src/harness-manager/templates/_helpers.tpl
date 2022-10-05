@@ -83,5 +83,8 @@ Create the name of the delegate image to use
 {{- if .Values.global.ff.enabled }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.FF }}
 {{- end }}
+{{- if .Values.global.saml.autoaccept }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.SAMLAutoAccept }}
+{{- end }}
 {{- printf "%s" $flags }}
 {{- end }}
