@@ -71,6 +71,12 @@ Create the name of the delegate image to use
 ## Generate ffString based of feature flag values and globally enabled features
 {{- define "harness-manager.ffString" -}}
 {{- $flags := .Values.featureFlags.Base }}
+{{- if .Values.global.cd.enabled }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.CD }}
+{{- end }}
+{{- if .Values.global.ci.enabled }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.CI }}
+{{- end }}
 {{- if .Values.global.sto.enabled }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.STO }}
 {{- end }}
