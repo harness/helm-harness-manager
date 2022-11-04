@@ -19,8 +19,11 @@ global:
     enabled: false
   ff:
     enabled: false
+  ccm:
+    enabled: false
   saml:
     autoaccept: false
+
 
 replicaCount: 1
 maxSurge: 1
@@ -145,3 +148,5 @@ featureFlags:
   SAMLAutoAccept: "AUTO_ACCEPT_SAML_ACCOUNT_INVITES,PL_NO_EMAIL_FOR_SAML_ACCOUNT_INVITES"
   # -- FF Feature Flags
   FF: "CFNG_ENABLED"
+  # -- CCM Feature Flags
+  CCM: "CENG_ENABLED"
