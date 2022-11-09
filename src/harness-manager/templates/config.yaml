@@ -7,8 +7,10 @@ data:
   WATCHER_METADATA_URL: '{{  .Values.global.loadbalancerURL }}/storage/wingswatchers/watcherprod.txt'
   {{- if .Values.global.ingress.useSelfSignedCert }}
   LOG_STREAMING_SERVICE_BASEURL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
+  LOG_STREAMING_SERVICE_EXTERNAL_URL: '{{ .Values.global.loadbalancerURL }}/gateway/log-service/'
   {{- else }}
-  LOG_STREAMING_SERVICE_BASEURL: '{{  .Values.global.loadbalancerURL }}/gateway/log-service/'
+  LOG_STREAMING_SERVICE_BASEURL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
+  LOG_STREAMING_SERVICE_EXTERNAL_URL: '{{ .Values.global.loadbalancerURL }}/gateway/log-service/'
   {{- end }}
   ATMOSPHERE_BACKEND: REDIS
   BACKGROUND_SCHEDULER_CLUSTERED: "true"
