@@ -1,4 +1,9 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: harness-manager-config
+  namespace: {{ .Release.Namespace }}
+  annotations: {}
 data:
   ALLOWED_ORIGINS: '{{  .Values.global.loadbalancerURL }}'
   API_URL: '{{  .Values.global.loadbalancerURL }}'
@@ -54,8 +59,3 @@ data:
   {{- end }}
   VERIFICATION_SERVICE_SECRET: 59MR5RlVARcdH7zb7pNx6GzqiglBmXR8
 
-kind: ConfigMap
-metadata:
-  name: harness-manager-config
-  namespace: {{ .Release.Namespace }}
-  annotations: {}
