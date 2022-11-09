@@ -137,7 +137,7 @@ featureFlags:
   # -- STO Feature Flags
   CD: "CDNG_ENABLED"
 # -- STO Feature Flags
-  CI: "CING_ENABLED"
+  CI: "CING_ENABLED,CI_INDIRECT_LOG_UPLOAD"
   # -- STO Feature Flags
   STO: "SECURITY,SECURITY_STAGE,STO_CI_PIPELINE_SECURITY,STO_API_V2"
   # -- SRM Flags
