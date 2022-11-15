@@ -95,5 +95,8 @@ Create the name of the delegate image to use
 {{- if .Values.global.saml.autoaccept }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.SAMLAutoAccept }}
 {{- end }}
+{{- if .Values.global.license.enabled }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.LICENSE }}
+{{- end }}
 {{- printf "%s" $flags }}
 {{- end }}

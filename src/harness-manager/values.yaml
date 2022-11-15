@@ -5,6 +5,9 @@ global:
   loadbalancerURL: ""
   mongoSSL: false
 
+  license:
+    enabled: true
+
   ingress:
     useSelfSignedCert: false
   cd:
@@ -149,3 +152,5 @@ featureFlags:
   FF: "CFNG_ENABLED"
   # -- CCM Feature Flags
   CCM: "CENG_ENABLED"
+
+  LICENSE: "NG_LICENSES_ENABLED,VIEW_USAGE_ENABLED"
