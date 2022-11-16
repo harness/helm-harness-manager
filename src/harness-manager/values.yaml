@@ -6,7 +6,7 @@ global:
   mongoSSL: false
 
   license:
-    enabled: true
+    enabled: false
 
   ingress:
     useSelfSignedCert: false
