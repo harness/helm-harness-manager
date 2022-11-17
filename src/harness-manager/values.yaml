@@ -5,6 +5,9 @@ global:
   loadbalancerURL: ""
   mongoSSL: false
 
+  license:
+    enabled: false
+
   ingress:
     useSelfSignedCert: false
   cd:
@@ -23,7 +26,6 @@ global:
     enabled: false
   saml:
     autoaccept: false
-
 
 replicaCount: 1
 maxSurge: 1
@@ -137,7 +139,7 @@ featureFlags:
   # -- STO Feature Flags
   CD: "CDNG_ENABLED"
 # -- STO Feature Flags
-  CI: "CING_ENABLED"
+  CI: "CING_ENABLED,CI_INDIRECT_LOG_UPLOAD"
   # -- STO Feature Flags
   STO: "SECURITY,SECURITY_STAGE,STO_CI_PIPELINE_SECURITY,STO_API_V2"
   # -- SRM Flags
@@ -152,3 +154,5 @@ featureFlags:
   CCM: "CENG_ENABLED"
   # -- GitOps Feature Flags
   GitOps: "GITOPS_ONPREM_ENABLED,CDS_SHOW_CREATE_PR,GITOPS_BYO_ARGO,ARGO_PHASE1,ARGO_PHASE2_MANAGED,CUSTOM_ARIFACT_NG,SERVICE_DASHBOARD_V2,OPTIMIZED_GIT_FETCH_FILES,MULTI_SERVICE_INFRA,ENV_GROUP,NG_SVC_ENV_REDESIGN,OPTIMIZED_GIT_FETCH_FILES,NG_GITOPS"
+  # -- Licensing flags
+  LICENSE: "NG_LICENSES_ENABLED,VIEW_USAGE_ENABLED"
