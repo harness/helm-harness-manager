@@ -77,6 +77,20 @@ delegate_docker_image:
     tag: latest
     digest: ""
 
+delegate_immutable_docker_image:
+  image:
+    registry: docker.io
+    repository: harness/delegate
+    tag: 22.10.77221
+    digest: ""
+
+upgrader_docker_image:
+  image:
+    registry: docker.io
+    repository: harness/upgrader
+    tag: latest
+    digest: ""
+
 appLogLevel: INFO
 
 java:

@@ -68,6 +68,21 @@ Create the name of the delegate image to use
 {{ include "common.images.image" (dict "imageRoot" .Values.delegate_docker_image.image "global" .Values.global) }}
 {{- end }}
 
+{{/*
+Create the name of the immutable delegate image to use
+*/}}
+{{- define "harness-manager.immutable_delegate_docker_image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.immutable_delegate_docker_image.image "global" .Values.global) }}
+{{- end }}
+
+{{/*
+Create the name of the delegate upgrader image to use
+*/}}
+{{- define "harness-manager.delegate_upgrader_docker_image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.upgrader_docker_image.image "global" .Values.global) }}
+{{- end }}
+
+
 ## Generate ffString based of feature flag values and globally enabled features
 {{- define "harness-manager.ffString" -}}
 {{- $flags := .Values.featureFlags.Base }}
