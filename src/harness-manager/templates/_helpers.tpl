@@ -71,6 +71,8 @@ Create the name of the delegate image to use
 ## Generate ffString based of feature flag values and globally enabled features
 {{- define "harness-manager.ffString" -}}
 {{- $flags := .Values.featureFlags.Base }}
+## -- gitops is enabled by default
+{{ $flags = printf "%s,%s" $flags $.Values.featureFlags.GitOps }}
 {{- if .Values.global.cd.enabled }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.CD }}
 {{- end }}
@@ -94,6 +96,9 @@ Create the name of the delegate image to use
 {{- end }}
 {{- if .Values.global.saml.autoaccept }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.SAMLAutoAccept }}
+{{- end }}
+{{- if .Values.global.license.enabled }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.LICENSE }}
 {{- end }}
 {{- printf "%s" $flags }}
 {{- end }}

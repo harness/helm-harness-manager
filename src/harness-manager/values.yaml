@@ -5,6 +5,9 @@ global:
   loadbalancerURL: ""
   mongoSSL: false
 
+  license:
+    enabled: false
+
   ingress:
     useSelfSignedCert: false
   cd:
@@ -149,3 +152,7 @@ featureFlags:
   FF: "CFNG_ENABLED"
   # -- CCM Feature Flags
   CCM: "CENG_ENABLED"
+  # -- GitOps Feature Flags
+  GitOps: "GITOPS_ONPREM_ENABLED,CDS_SHOW_CREATE_PR,GITOPS_BYO_ARGO,ARGO_PHASE1,ARGO_PHASE2_MANAGED,CUSTOM_ARIFACT_NG,SERVICE_DASHBOARD_V2,OPTIMIZED_GIT_FETCH_FILES,MULTI_SERVICE_INFRA,ENV_GROUP,NG_SVC_ENV_REDESIGN,OPTIMIZED_GIT_FETCH_FILES,NG_GITOPS"
+  # -- Licensing flags
+  LICENSE: "NG_LICENSES_ENABLED,VIEW_USAGE_ENABLED"
