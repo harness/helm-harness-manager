@@ -28,8 +28,8 @@ global:
     autoaccept: false
   gitops:
     enabled: true
-  opa: 
-    enabled: false 
+  opa:
+    enabled: false
 
 replicaCount: 1
 maxSurge: 1
