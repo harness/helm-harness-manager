@@ -78,7 +78,7 @@ Create the name of the immutable delegate image to use
 {{/*
 Create the name of the delegate upgrader image to use
 */}}
-{{- define "harness-manager.delegate_upgrader_docker_image" -}}
+{{- define "harness-manager.upgrader_docker_image" -}}
 {{ include "common.images.image" (dict "imageRoot" .Values.upgrader_docker_image.image "global" .Values.global) }}
 {{- end }}
 

@@ -77,7 +77,7 @@ delegate_docker_image:
     tag: latest
     digest: ""
 
-delegate_immutable_docker_image:
+immutable_delegate_docker_image:
   image:
     registry: docker.io
     repository: harness/delegate
