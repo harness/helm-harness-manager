@@ -72,10 +72,10 @@ Create the name of the delegate image to use
 {{- define "harness-manager.ffString" -}}
 {{- $flags := .Values.featureFlags.Base }}
 {{- if .Values.global.gitops.enabled }}
-{{ $flags = printf "%s,%s" $flags $.Values.featureFlags.GitOps }}
+{{- $flags = printf "%s,%s" $flags $.Values.featureFlags.GitOps }}
 {{- end }}
 {{- if .Values.global.opa.enabled }}
-{{ $flags = printf "%s,%s" $flags $.Values.featureFlags.OPA }}
+{{- $flags = printf "%s,%s" $flags $.Values.featureFlags.OPA }}
 {{- end }}
 {{- if .Values.global.cd.enabled }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.CD }}
