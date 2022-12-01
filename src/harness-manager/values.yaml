@@ -161,7 +161,7 @@ featureFlags:
   # -- STO Feature Flags
   STO: "SECURITY,SECURITY_STAGE,STO_CI_PIPELINE_SECURITY,STO_API_V2"
   # -- SRM Flags
-  SRM: "ERROR_TRACKING_ENABLED"
+  SRM: "CVNG_ENABLED,ERROR_TRACKING_ENABLED"
   # -- Custom Dashboard Flags
   CDB: "NG_DASHBOARDS"
   # -- AutoAccept Feature Flags
