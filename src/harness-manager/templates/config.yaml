@@ -61,6 +61,7 @@ data:
   {{- end }}
   VERIFICATION_SERVICE_SECRET: 59MR5RlVARcdH7zb7pNx6GzqiglBmXR8
   ENABLE_ITERATORS: 'true'
+  ITERATOR_CONFIG_PATH: '/opt/harness/config'
 
 ---
 apiVersion: v1
