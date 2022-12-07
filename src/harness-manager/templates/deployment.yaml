@@ -115,15 +115,21 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             timeoutSeconds: 1
-          {{- if .Values.global.mongoSSL }}
           volumeMounts:
+            - name: dynamic-iterator-config
+              mountPath: /opt/harness/config
+          {{- if .Values.global.mongoSSL }}
             - name: mongo-ssl-certs
               mountPath: /mongo
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- if .Values.global.mongoSSL }}
       volumes:
+        - name: dynamic-iterator-config
+          configMap:
+            name: iterator-config
+            defaultMode: 420
+      {{- if .Values.global.mongoSSL }}
         - name: mongo-ssl-certs
           secret:
             secretName: mongodb-replicaset-ssl-cert
