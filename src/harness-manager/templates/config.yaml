@@ -12,7 +12,7 @@ data:
   WATCHER_METADATA_URL: '{{  .Values.global.loadbalancerURL }}/storage/wingswatchers/watcherprod.txt'
   {{- if .Values.global.ingress.useSelfSignedCert }}
   LOG_STREAMING_SERVICE_BASEURL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
-  LOG_STREAMING_SERVICE_EXTERNAL_URL: '{{ .Values.global.loadbalancerURL }}/gateway/log-service/'
+  LOG_STREAMING_SERVICE_EXTERNAL_URL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
   {{- else }}
   LOG_STREAMING_SERVICE_BASEURL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
   LOG_STREAMING_SERVICE_EXTERNAL_URL: '{{ .Values.global.loadbalancerURL }}/gateway/log-service/'
@@ -45,9 +45,9 @@ data:
   SERVICE_ACC: /opt/harness/svc/service_acc.json
   VERSION: {{ .Values.version }}
   LOG_STREAMING_SERVICE_TOKEN: c76e567a-b341-404d-a8dd-d9738714eb82
-  NG_MANAGER_BASE_URL: '{{  .Values.global.loadbalancerURL }}/ng/api/'
+  NG_MANAGER_BASE_URL: 'http://ng-manager:7090/'
   ACCESS_CONTROL_ENABLED: "true"
-  ACCESS_CONTROL_BASE_URL: '{{  .Values.global.loadbalancerURL }}/authz/api/'
+  ACCESS_CONTROL_BASE_URL: 'http://access-control:9006/api/'
   EVENTS_FRAMEWORK_REDIS_SENTINELS: 'redis://redis-sentinel-harness-announce-0.{{  .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-1.{{ .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-2.{{ .Release.Namespace }}:26379'
   EVENTS_FRAMEWORK_SENTINEL_MASTER_NAME: 'harness-redis'
   EVENTS_FRAMEWORK_USE_SENTINEL: "true"
