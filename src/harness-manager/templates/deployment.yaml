@@ -29,10 +29,7 @@ spec:
         app: harness-manager
         {{- include "harness-manager.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      {{- include "harness-manager.pullSecrets" . | nindent 6 }}
       serviceAccountName: {{ include "harness-manager.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
