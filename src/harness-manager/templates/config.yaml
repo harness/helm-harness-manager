@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations: {}
 data:
+  GITOPS_SERVICE_CLIENT_BASEURL: http://gitops:7908/api/v1/
   ALLOWED_ORIGINS: '{{  .Values.global.loadbalancerURL }}'
   API_URL: '{{  .Values.global.loadbalancerURL }}'
   DELEGATE_METADATA_URL: '{{  .Values.global.loadbalancerURL }}/storage/wingsdelegates/delegateprod.txt'

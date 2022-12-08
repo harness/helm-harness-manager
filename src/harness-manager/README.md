@@ -1,6 +1,6 @@
 # harness-manager
 
-![Version: 0.2.36](https://img.shields.io/badge/Version-0.2.36-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
+![Version: 0.2.37](https://img.shields.io/badge/Version-0.2.37-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -54,6 +54,7 @@ A Helm chart for Kubernetes
 | global.srm.enabled | bool | `false` |  |
 | global.sto.enabled | bool | `false` |  |
 | image.digest | string | `""` |  |
+| image.imagePullSecrets | list | `[]` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"harness/manager-signed"` |  |
@@ -100,6 +101,7 @@ A Helm chart for Kubernetes
 | upgrader_docker_image.image.tag | string | `"latest"` |  |
 | version | string | `"1.0.76019"` |  |
 | waitForInitContainer.image.digest | string | `""` |  |
+| waitForInitContainer.image.imagePullSecrets | list | `[]` |  |
 | waitForInitContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | waitForInitContainer.image.registry | string | `"docker.io"` |  |
 | waitForInitContainer.image.repository | string | `"harness/helm-init-container"` |  |

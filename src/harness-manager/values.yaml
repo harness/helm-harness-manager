@@ -42,6 +42,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "77126"
   digest: ""
+  imagePullSecrets: []
 
 waitForInitContainer:
   image:
@@ -50,6 +51,7 @@ waitForInitContainer:
     pullPolicy: IfNotPresent
     tag: "latest"
     digest: ""
+    imagePullSecrets: []
 
 initContainer:
   image:

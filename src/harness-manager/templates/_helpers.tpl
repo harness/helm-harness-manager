@@ -121,3 +121,9 @@ Create the name of the delegate upgrader image to use
 {{- end }}
 {{- printf "%s" $flags }}
 {{- end }}
+
+
+
+{{- define "harness-manager.pullSecrets" -}}
+{{ include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.waitForInitContainer.image) "global" .Values.global ) }}
+{{- end -}}
