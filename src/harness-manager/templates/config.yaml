@@ -13,7 +13,7 @@ data:
   WATCHER_METADATA_URL: '{{  .Values.global.loadbalancerURL }}/storage/wingswatchers/watcherprod.txt'
   {{- if .Values.global.ingress.useSelfSignedCert }}
   LOG_STREAMING_SERVICE_BASEURL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
-  LOG_STREAMING_SERVICE_EXTERNAL_URL: '{{ .Values.global.loadbalancerURL }}/gateway/log-service/'
+  LOG_STREAMING_SERVICE_EXTERNAL_URL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
   {{- else }}
   LOG_STREAMING_SERVICE_BASEURL: 'http://log-service.{{ .Release.Namespace }}.svc.cluster.local:8079/'
   LOG_STREAMING_SERVICE_EXTERNAL_URL: '{{ .Values.global.loadbalancerURL }}/gateway/log-service/'
@@ -46,9 +46,9 @@ data:
   SERVICE_ACC: /opt/harness/svc/service_acc.json
   VERSION: {{ .Values.version }}
   LOG_STREAMING_SERVICE_TOKEN: c76e567a-b341-404d-a8dd-d9738714eb82
-  NG_MANAGER_BASE_URL: '{{  .Values.global.loadbalancerURL }}/ng/api/'
+  NG_MANAGER_BASE_URL: 'http://ng-manager:7090/'
   ACCESS_CONTROL_ENABLED: "true"
-  ACCESS_CONTROL_BASE_URL: '{{  .Values.global.loadbalancerURL }}/authz/api/'
+  ACCESS_CONTROL_BASE_URL: 'http://access-control:9006/api/'
   EVENTS_FRAMEWORK_REDIS_SENTINELS: 'redis://redis-sentinel-harness-announce-0.{{  .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-1.{{ .Release.Namespace }}:26379,redis://redis-sentinel-harness-announce-2.{{ .Release.Namespace }}:26379'
   EVENTS_FRAMEWORK_SENTINEL_MASTER_NAME: 'harness-redis'
   EVENTS_FRAMEWORK_USE_SENTINEL: "true"
@@ -61,3 +61,340 @@ data:
   MONGO_SSL_CA_TRUST_STORE_PASSWORD: password
   {{- end }}
   VERIFICATION_SERVICE_SECRET: 59MR5RlVARcdH7zb7pNx6GzqiglBmXR8
+  ENABLE_ITERATORS: 'true'
+  ITERATOR_CONFIG_PATH: '/opt/harness/config'
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iterator-config
+data:
+  iterator_config.json: |
+    [
+      {
+        "name": "AlertReconciliation",
+        "enabled": true,
+        "threadPoolSize": 3,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 600,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "ArtifactCollection",
+        "enabled": true,
+        "threadPoolSize": 20,
+        "threadPoolIntervalInSeconds": 10,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 60,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "ArtifactCleanup",
+        "enabled": true,
+        "threadPoolSize": 5,
+        "threadPoolIntervalInSeconds": 300,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 7200,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "EventDelivery",
+        "enabled": true,
+        "threadPoolSize": 25,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 5,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "InstanceSync",
+        "enabled": true,
+        "threadPoolSize": 10,
+        "threadPoolIntervalInSeconds": 30,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 600,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "LicenseExpiryCheck",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 30,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 3600,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "ApprovalPolling",
+        "enabled": true,
+        "threadPoolSize": 5,
+        "threadPoolIntervalInSeconds": 10,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 60,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "GCPBilling",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 1800,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 3600,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "SegmentGroupEventJob",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 1800,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 86400,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "BarrierInstanceMonitor",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 60,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "EntityAuditRecordProcessor",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 30,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 1800,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "UsageMetricsHandler",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 30,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 86400,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "ResourceConstraint-Backup",
+        "enabled": true,
+        "threadPoolSize": 10,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 30,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "WorkflowExecutionMonitor",
+        "enabled": true,
+        "threadPoolSize": 5,
+        "threadPoolIntervalInSeconds": 10,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 60,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "SettingAttributeValidateConnectivity",
+        "enabled": true,
+        "threadPoolSize": 5,
+        "threadPoolIntervalInSeconds": 600,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 10800,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "VaultSecretManagerRenewalHandler",
+        "enabled": true,
+        "threadPoolSize": 5,
+        "threadPoolIntervalInSeconds": 5,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 31,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "SettingAttributesSecretsMigrationHandler",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 30,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 1800,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "GitSyncEntityExpiryCheck",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 600,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 43200,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "ExportExecutionsRequestHandler",
+        "enabled": true,
+        "threadPoolSize": 3,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 1800,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "ExportExecutionsRequestCleanupHandler",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 3600,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 2700,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "DeploymentFreezeActivities",
+        "enabled": true,
+        "threadPoolSize": 3,
+        "threadPoolIntervalInSeconds": 0,
+        "nextIterationMode": "THROTTLE",
+        "targetIntervalInSeconds": 0,
+        "throttleIntervalInSeconds": 45
+      },
+      {
+        "name": "DeploymentFreezeDeactivation",
+        "enabled": true,
+        "threadPoolSize": 3,
+        "threadPoolIntervalInSeconds": 0,
+        "nextIterationMode": "THROTTLE",
+        "targetIntervalInSeconds": 0,
+        "throttleIntervalInSeconds": 45
+      },
+      {
+        "name": "CeLicenceExpiryProcessor",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 86400,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 86400,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "DeleteAccountIterator",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 18000,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "DeletedEntityIterator",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 43200,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "ResourceLookupTagLinkSync",
+        "enabled": true,
+        "threadPoolSize": 1,
+        "threadPoolIntervalInSeconds": 43200,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 43200,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "AccessRequestHandler",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 5,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 15,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "ScheduledTrigger",
+        "enabled": true,
+        "threadPoolSize": 8,
+        "threadPoolIntervalInSeconds": 0,
+        "nextIterationMode": "THROTTLE",
+        "targetIntervalInSeconds": 0,
+        "throttleIntervalInSeconds": 45
+      },
+      {
+        "name": "LdapGroupScheduled",
+        "enabled": true,
+        "threadPoolSize": 8,
+        "threadPoolIntervalInSeconds": 0,
+        "nextIterationMode": "THROTTLE",
+        "targetIntervalInSeconds": 0,
+        "throttleIntervalInSeconds": 45
+      },
+      {
+        "name": "EncryptedDataLocalToGcpKmsMigrationHandler",
+        "enabled": true,
+        "threadPoolSize": 5,
+        "threadPoolIntervalInSeconds": 30,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 72000,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "TimeoutEngine",
+        "enabled": true,
+        "threadPoolSize": 5,
+        "threadPoolIntervalInSeconds": 10,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 10,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "GitSyncPollingIterator",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 300,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "PerpetualTaskAssignment",
+        "enabled": true,
+        "threadPoolSize": 5,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 60,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "DelegateDisconnectDetector",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 60,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 60,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "DelegateTaskFail",
+        "enabled": true,
+        "threadPoolSize": 2,
+        "threadPoolIntervalInSeconds": 30,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 30,
+        "throttleIntervalInSeconds": 0
+      },
+      {
+        "name": "DelegateTelemetryPublisherIteration",
+        "enabled": true,
+        "threadPoolSize": 1,
+        "threadPoolIntervalInSeconds": 600,
+        "nextIterationMode": "TARGET",
+        "targetIntervalInSeconds": 86400,
+        "throttleIntervalInSeconds": 0
+      }
+    ]
+
