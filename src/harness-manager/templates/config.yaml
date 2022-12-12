@@ -23,6 +23,7 @@ data:
   CACHE_BACKEND: REDIS
   CAPSULE_JAR: rest-capsule.jar
   DELEGATE_DOCKER_IMAGE: {{ include "harness-manager.delegate_docker_image" . }}
+  IMMUTABLE_DELEGATE_ENABLED: '{{ .Values.global.useImmutableDelegate }}'
   IMMUTABLE_DELEGATE_DOCKER_IMAGE: {{ include "harness-manager.immutable_delegate_docker_image" . }}
   UPGRADER_DOCKER_IMAGE: {{ include "harness-manager.upgrader_docker_image" . }}
   DELEGATE_SERVICE_TARGET: harness-manager:9879
