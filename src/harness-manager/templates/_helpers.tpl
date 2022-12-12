@@ -119,6 +119,7 @@ Create the name of the delegate upgrader image to use
 {{- if .Values.global.license.enabled }}
 {{- $flags = printf "%s,%s" $flags .Values.featureFlags.LICENSE }}
 {{- end }}
+{{- $flags = printf "%s,%s" $flags .Values.featureFlags.ADD }}
 {{- printf "%s" $flags }}
 {{- end }}
 

@@ -4,10 +4,8 @@
 global:
   loadbalancerURL: ""
   mongoSSL: false
-
   license:
     enabled: false
-
   ingress:
     useSelfSignedCert: false
   cd:
@@ -30,6 +28,7 @@ global:
     enabled: true
   opa:
     enabled: false
+  useImmutableDelegate: ""
 
 replicaCount: 1
 maxSurge: 1
@@ -178,3 +177,5 @@ featureFlags:
   LICENSE: "NG_LICENSES_ENABLED,VIEW_USAGE_ENABLED"
   # -- OPA
   OPA: "OPA_PIPELINE_GOVERNANCE,OPA_FEATURE_GOVERNANCE,OPA_FF_GOVERNANCE"
+  # -- Additional Feature Flag
+  ADD: ""
